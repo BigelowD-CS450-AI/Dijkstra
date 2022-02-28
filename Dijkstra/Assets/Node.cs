@@ -17,6 +17,8 @@ public struct EdgeData
     }
 }
 
+public enum WeightCalculationType {distance = 0, mostConnections=1,leastConnections=2, scenicRoute=3};
+
 public class Node : MonoBehaviour
 {
     //List of all outgoing node connections
@@ -27,6 +29,29 @@ public class Node : MonoBehaviour
     {
         foreach (Node node in EditorConnections)
             connections.Add(new EdgeData(node, Vector3.Distance(transform.position, node.transform.position) ) );
+    }
+
+    public void ChangeWeightCalcualtion(WeightCalculationType wct)
+    {
+        switch (wct)
+        {
+            case WeightCalculationType.distance :
+                foreach (Node node in EditorConnections)
+                    connections.Add(new EdgeData(node, Vector3.Distance(transform.position, node.transform.position) ) );
+                break;
+            case WeightCalculationType.mostConnections :
+                foreach (Node node in EditorConnections)
+                    connections.Add(new EdgeData(node, node.connections.Count ) );
+                break;
+            case WeightCalculationType.leastConnections :
+                foreach (Node node in EditorConnections)
+                    connections.Add(new EdgeData(node, -node.connections.Count ) );
+                break;
+            case WeightCalculationType.scenicRoute :
+                foreach (Node node in EditorConnections)
+                    connections.Add(new EdgeData(node, -Vector3.Distance(transform.position, node.transform.position) ) );
+                break;
+        }
     }
 
     // Update is called once per frame

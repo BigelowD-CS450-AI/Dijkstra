@@ -40,7 +40,7 @@ public class DijkstraAlgo
             Debug.Log(current.node == goal);
             if (current.node == goal)
                 break;
-            Debug.Log(current.node.connections.Count);
+            //Debug.Log(current.node.connections.Count);
             foreach (EdgeData connection in current.node.connections)
             {
                 Debug.Log(connection);
